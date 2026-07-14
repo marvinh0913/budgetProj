@@ -1,0 +1,14 @@
+[tool.black]
+line-length = 88
+target-version = ['py39']
+include = '\.pyi?$'
+exclude = '''
+/(
+    __pycache__
+  | node_modules
+  | .pytest_cache
+)/
+'''
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]

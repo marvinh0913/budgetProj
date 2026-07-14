@@ -12,4 +12,10 @@ export default defineConfig({
       'Cross-Origin-Embedder-Policy': 'require-corp',  // required for Pyodide  
     },
   },
+  test: {
+    environment: 'jsdom',
+    globals: true,
+    setupFiles: './tests/setup.js',
+    passWithNoTests: true,
+  },
 });
