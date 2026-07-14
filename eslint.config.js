@@ -1,14 +1,18 @@
 import js from '@eslint/js';
 import reactPlugin from 'eslint-plugin-react';
 import reactHooksPlugin from 'eslint-plugin-react-hooks';
+import prettierPlugin from 'eslint-plugin-prettier';
+import prettierConfig from 'eslint-config-prettier';
 
 export default [
   js.configs.recommended,
+  prettierConfig,
   {
     files: ['**/*.{js,jsx}'],
     plugins: {
       react: reactPlugin,
       'react-hooks': reactHooksPlugin,
+      prettier: prettierPlugin,
     },
     languageOptions: {
       ecmaVersion: 'latest',
@@ -26,6 +30,7 @@ export default [
       'react-hooks/exhaustive-deps': 'warn',
       'no-unused-vars': 'warn',
       'no-console': 'warn',
+      'prettier/prettier': 'warn',          
     },
     settings: {
       react: {
