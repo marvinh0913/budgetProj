@@ -1,5 +1,5 @@
 """
-Validation utilities for BudgetProj.
+Validation utilities.
 Validates transactions, FRED API responses, and interest calculation inputs
 before any calculations are performed.
 """
