@@ -25,6 +25,8 @@ export default [
         fetch: 'readonly',
         Date: 'readonly',
         Promise: 'readonly',
+        setInterval: 'readonly',
+        clearInterval: 'readonly',
       },
     },
     rules: {
