@@ -18,17 +18,17 @@ describe('WelcomeMessage rendering', () => {
 
   it('displays welcome heading', () => {
     render(<WelcomeMessage />);
-    expect(screen.getByText(/welcome to budgetproj/i)).toBeTruthy();
+    expect(screen.getByText(/welcome to budget proj/i)).toBeTruthy();
   });
 
   it('displays how to use instructions', () => {
     render(<WelcomeMessage />);
-    expect(screen.getByText(/add your transactions/i)).toBeTruthy();
+    expect(screen.getByText(/add your current monthly expenses/i)).toBeTruthy();
   });
 
   it('displays calculate instruction', () => {
     render(<WelcomeMessage />);
-    expect(screen.getByText(/click calculate/i)).toBeTruthy();
+    expect(screen.getByText(/personalized budget breakdown/i)).toBeTruthy();
   });
 
   it('remains visible when transactions exist', () => {

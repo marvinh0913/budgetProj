@@ -1,0 +1,36 @@
+/* ─── Transaction Form ───────────────────────────────────────────────────────── */
+
+.transaction-form {
+    margin-bottom: var(--spacing-lg);
+  }
+  
+  .transaction-form-toggle {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    padding: var(--spacing-md);
+    border-radius: var(--radius-md);
+    font-size: var(--font-size-md);
+    cursor: pointer;
+    border: none;
+    transition: background-color var(--transition-fast);
+  }
+  
+  .transaction-form-toggle:hover {
+    background-color: var(--color-primary-light);
+  }
+  
+  .transaction-form-body {
+    padding: var(--spacing-lg) 0 var(--spacing-sm) 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+  }
+  
+  .form-icon {
+    width: 20px;
+    height: 20px;
+  }
