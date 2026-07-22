@@ -12,7 +12,7 @@ const FRED_SERIES = {
   mortgage: 'MORTGAGE30US',
   federal_funds: 'FEDFUNDS',
   credit_card: 'TERMCBCCALLNS',
-  auto_loan: 'TERMCBAU48NS',
+  auto_loan: 'TERMCBAUTO48NS',
 };
 
 // Cache expiry in hours per rate type
@@ -24,7 +24,8 @@ const CACHE_EXPIRY_HOURS = {
   auto_loan: 168, // updates monthly
 };
 
-const FRED_BASE_URL = 'https://fred.stlouisfed.org/graph/fredgraph.csv?id=';
+const FRED_API_KEY = import.meta.env.VITE_FRED_API_KEY;
+const FRED_BASE_URL = '/fred-api/series/observations';
 
 /**
  * Check if a cached rate is stale based on its expiry hours.
@@ -75,17 +76,39 @@ export const parseFredCsv = (csvText) => {
  */
 const fetchSingleRate = async (seriesId) => {
   try {
-    const response = await fetch(`${FRED_BASE_URL}${seriesId}`);
-
+    const url = `${FRED_BASE_URL}?series_id=${seriesId}&api_key=${FRED_API_KEY}&sort_order=desc&limit=1&file_type=json`;
+    const response = await fetch(url);
     if (!response.ok) {
       console.warn(`FRED API returned ${response.status} for ${seriesId}`);
       return null;
     }
-
-    const csvText = await response.text();
-    return parseFredCsv(csvText);
+    const data = await response.json();
+    return parseFredJson(data);
   } catch (error) {
     console.warn(`Failed to fetch ${seriesId}:`, error.message);
+    return null;
+  }
+};
+
+/**
+ * Parse FRED JSON response and extract the most recent rate value.
+ * @param {Object} data - JSON response from FRED API
+ * @returns {number|null} Most recent rate value or null if parsing fails
+ */
+/**
+ * Parse FRED JSON response and extract the most recent rate value.
+ * @param {Object} data - JSON response from FRED API
+ * @returns {number|null} Most recent rate value or null if parsing fails
+ */
+export const parseFredJson = (data) => {
+  try {
+    if (!data || !data.observations || data.observations.length === 0) {
+      return null;
+    }
+    const value = parseFloat(data.observations[0].value);
+    if (isNaN(value)) return null;
+    return value;
+  } catch {
     return null;
   }
 };

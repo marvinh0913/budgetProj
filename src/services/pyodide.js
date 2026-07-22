@@ -31,7 +31,19 @@ const loadPythonFiles = async (pyodide) => {
     if (!response.ok) {
       throw new Error(`Failed to load Python file: ${file}`);
     }
-    const code = await response.text();
+    let code = await response.text();
+
+    // Remove module-level imports that don't work in Pyodide
+    // All functions are loaded into the same namespace so imports aren't needed
+    code = code.replace(
+      /^from src\.python\.\w+ import.*$/gm,
+      '# import removed for Pyodide compatibility'
+    );
+    code = code.replace(
+      /^import src\.python\.\w+.*$/gm,
+      '# import removed for Pyodide compatibility'
+    );
+
     pyodide.runPython(code);
   }
 };

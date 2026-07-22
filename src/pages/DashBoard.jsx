@@ -30,7 +30,8 @@ function Dashboard() {
     const stored = getTransactions();
     if (stored.length > 0) {
       setTransactions(stored);
-      setNextId(stored.length + 1);
+      const maxId = Math.max(...stored.map((t) => t.id || 0));
+      setNextId(maxId + 1);
     }
 
     fetchAllRates().then((result) => {
@@ -124,26 +125,41 @@ function Dashboard() {
                     data={{
                       group,
                       current_amount: amount,
-                      current_percentage: summary.total_income > 0
-                        ? Math.round((amount / summary.total_income) * 100)
-                        : 0,
+                      current_percentage:
+                        summary.total_income > 0
+                          ? Math.round((amount / summary.total_income) * 100)
+                          : 0,
                       recommended_percentage:
-                        group === 'essentials' ? 50 :
-                        group === 'wants' ? 30 : 20,
-                      recommended_amount: summary.total_income > 0
-                        ? Math.round(
-                            ((group === 'essentials' ? 50 :
-                              group === 'wants' ? 30 : 20) / 100) *
-                            summary.total_income
-                          )
-                        : 0,
-                      difference: amount - (summary.total_income > 0
-                        ? Math.round(
-                            ((group === 'essentials' ? 50 :
-                              group === 'wants' ? 30 : 20) / 100) *
-                            summary.total_income
-                          )
-                        : 0),
+                        group === 'essentials'
+                          ? 50
+                          : group === 'wants'
+                            ? 30
+                            : 20,
+                      recommended_amount:
+                        summary.total_income > 0
+                          ? Math.round(
+                              ((group === 'essentials'
+                                ? 50
+                                : group === 'wants'
+                                  ? 30
+                                  : 20) /
+                                100) *
+                                summary.total_income
+                            )
+                          : 0,
+                      difference:
+                        amount -
+                        (summary.total_income > 0
+                          ? Math.round(
+                              ((group === 'essentials'
+                                ? 50
+                                : group === 'wants'
+                                  ? 30
+                                  : 20) /
+                                100) *
+                                summary.total_income
+                            )
+                          : 0),
                       message: `Your ${group} spending is ${
                         summary.total_income > 0
                           ? Math.round((amount / summary.total_income) * 100)
@@ -157,9 +173,7 @@ function Dashboard() {
             <SuggestionList suggestions={summary.suggestions} />
 
             <div className="charts-grid">
-              <SpendingBreakdown
-                data={summary.spending_by_category}
-              />
+              <SpendingBreakdown data={summary.spending_by_category} />
               <BudgetVsActual
                 data={summary.group_totals}
                 income={summary.total_income}
@@ -177,18 +191,19 @@ function Dashboard() {
             {interestResult && (
               <div className="interest-result card">
                 <h3>Calculation Result</h3>
-                {Object.entries(interestResult).map(([key, value]) => (
-                  typeof value === 'number' && (
-                    <div key={key} className="interest-result-item">
-                      <span className="interest-result-label">
-                        {key.replace(/_/g, ' ')}
-                      </span>
-                      <span className="interest-result-value">
-                        ${value.toFixed(2)}
-                      </span>
-                    </div>
-                  )
-                ))}
+                {Object.entries(interestResult).map(
+                  ([key, value]) =>
+                    typeof value === 'number' && (
+                      <div key={key} className="interest-result-item">
+                        <span className="interest-result-label">
+                          {key.replace(/_/g, ' ')}
+                        </span>
+                        <span className="interest-result-value">
+                          ${value.toFixed(2)}
+                        </span>
+                      </div>
+                    )
+                )}
               </div>
             )}
           </>
