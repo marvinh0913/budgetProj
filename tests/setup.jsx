@@ -3,7 +3,9 @@ import { vi } from 'vitest';
 
 // Mock Chart.js — canvas not supported in jsdom
 vi.mock('chart.js', () => ({
-  Chart: vi.fn(),
+  Chart: {
+    register: vi.fn(),
+  },
   CategoryScale: vi.fn(),
   LinearScale: vi.fn(),
   BarElement: vi.fn(),

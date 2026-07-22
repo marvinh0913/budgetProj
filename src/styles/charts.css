@@ -1,0 +1,52 @@
+/* ─── Charts ─────────────────────────────────────────────────────────────────── */
+
+.chart-heading {
+    color: var(--color-primary);
+    margin-bottom: var(--spacing-lg);
+  }
+  
+  .chart-empty {
+    text-align: center;
+    color: var(--color-text-light);
+    padding: var(--spacing-xl);
+  }
+  
+  /* ─── Spending Breakdown ─────────────────────────────────────────────────────── */
+  
+  .spending-breakdown {
+    margin-bottom: var(--spacing-lg);
+  }
+  
+  /* ─── Budget vs Actual ───────────────────────────────────────────────────────── */
+  
+  .budget-vs-actual {
+    margin-bottom: var(--spacing-lg);
+  }
+  
+  /* ─── Interest Impact ────────────────────────────────────────────────────────── */
+  
+  .interest-impact {
+    margin-bottom: var(--spacing-lg);
+  }
+  
+  .interest-impact-stats {
+    display: flex;
+    gap: var(--spacing-xl);
+    margin-bottom: var(--spacing-lg);
+  }
+  
+  .interest-impact-stat {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+  }
+  
+  .interest-impact-label {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-light);
+  }
+  
+  .interest-impact-value {
+    font-size: var(--font-size-xl);
+    font-weight: bold;
+  }
