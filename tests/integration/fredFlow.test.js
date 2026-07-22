@@ -60,7 +60,10 @@ describe('fetch rates and cache', () => {
     vi.spyOn(global, 'fetch').mockResolvedValue({
       ok: true,
       json: async () => ({
-        observations: [{ value: '6.59' }],
+        mortgage: 6.59,
+        federal_funds: 5.25,
+        credit_card: 21.47,
+        auto_loan: 7.89,
       }),
     });
 
@@ -74,7 +77,10 @@ describe('fetch rates and cache', () => {
     vi.spyOn(global, 'fetch').mockResolvedValue({
       ok: true,
       json: async () => ({
-        observations: [{ value: '6.59' }],
+        mortgage: 6.59,
+        federal_funds: 5.25,
+        credit_card: 21.47,
+        auto_loan: 7.89,
       }),
     });
 
@@ -88,7 +94,10 @@ describe('fetch rates and cache', () => {
     vi.spyOn(global, 'fetch').mockResolvedValue({
       ok: true,
       json: async () => ({
-        observations: [{ value: '6.59' }],
+        mortgage: 6.59,
+        federal_funds: 5.25,
+        credit_card: 21.47,
+        auto_loan: 7.89,
       }),
     });
 
@@ -100,7 +109,10 @@ describe('fetch rates and cache', () => {
     vi.spyOn(global, 'fetch').mockResolvedValue({
       ok: true,
       json: async () => ({
-        observations: [{ value: '6.59' }],
+        mortgage: 6.59,
+        federal_funds: 5.25,
+        credit_card: 21.47,
+        auto_loan: 7.89,
       }),
     });
 
@@ -150,7 +162,10 @@ describe('retrieve from cache on subsequent loads', () => {
     const fetchSpy = vi.spyOn(global, 'fetch').mockResolvedValue({
       ok: true,
       json: async () => ({
-        observations: [{ value: '6.59' }],
+        mortgage: 6.59,
+        federal_funds: 5.25,
+        credit_card: 21.47,
+        auto_loan: 7.89,
       }),
     });
 
@@ -163,7 +178,10 @@ describe('retrieve from cache on subsequent loads', () => {
     vi.spyOn(global, 'fetch').mockResolvedValue({
       ok: true,
       json: async () => ({
-        observations: [{ value: '6.59' }],
+        mortgage: 6.59,
+        federal_funds: 5.25,
+        credit_card: 21.47,
+        auto_loan: 7.89,
       }),
     });
 
@@ -195,7 +213,10 @@ describe('parse and validate FRED response', () => {
     vi.spyOn(global, 'fetch').mockResolvedValue({
       ok: true,
       json: async () => ({
-        observations: [{ value: '6.59' }],
+        mortgage: 6.59,
+        federal_funds: 5.25,
+        credit_card: 21.47,
+        auto_loan: 7.89,
       }),
     });
 
@@ -203,6 +224,7 @@ describe('parse and validate FRED response', () => {
     const cached = getCachedRates();
     expect(cached.mortgage).toBe(parseFredCsv(MOCK_CSV));
   });
+
 });
 
 // ─── Multi step real world scenarios ─────────────────────────────────────────
@@ -216,7 +238,10 @@ describe('multi step real world FRED scenarios', () => {
     vi.spyOn(global, 'fetch').mockResolvedValue({
       ok: true,
       json: async () => ({
-        observations: [{ value: '6.59' }],
+        mortgage: 6.59,
+        federal_funds: 5.25,
+        credit_card: 21.47,
+        auto_loan: 7.89,
       }),
     });
     const firstLoad = await fetchAllRates();
@@ -239,7 +264,10 @@ describe('multi step real world FRED scenarios', () => {
     vi.spyOn(global, 'fetch').mockResolvedValue({
       ok: true,
       json: async () => ({
-        observations: [{ value: '6.59' }],
+        mortgage: 6.59,
+        federal_funds: 5.25,
+        credit_card: 21.47,
+        auto_loan: 7.89,
       }),
     });
     const result = await fetchAllRates();

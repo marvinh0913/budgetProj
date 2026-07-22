@@ -1,13 +1,11 @@
 /**
  * FRED API service for BudgetProj.
- * Fetches real-time interest rate data from the Federal Reserve
- * Bank of St. Louis. Implements per-rate caching based on
- * each rate's actual update frequency.
+ * Rates are fetched at build time and baked into rates.json.
+ * Implements per-rate caching based on each rate's update frequency.
  */
 
 import { saveRates, getRates } from './storage';
 
-// FRED series IDs for each rate type
 const FRED_SERIES = {
   mortgage: 'MORTGAGE30US',
   federal_funds: 'FEDFUNDS',
@@ -15,19 +13,12 @@ const FRED_SERIES = {
   auto_loan: 'TERMCBAUTO48NS',
 };
 
-// Cache expiry in hours per rate type
-// Based on actual FRED update frequency
 const CACHE_EXPIRY_HOURS = {
-  mortgage: 24, // updates weekly
-  federal_funds: 168, // updates every ~6 weeks
-  credit_card: 720, // updates quarterly
-  auto_loan: 168, // updates monthly
+  mortgage: 24,
+  federal_funds: 168,
+  credit_card: 720,
+  auto_loan: 168,
 };
-
-const FRED_API_KEY = import.meta.env.VITE_FRED_API_KEY;
-const FRED_BASE_URL = import.meta.env.DEV
-  ? '/fred-api/series/observations'
-  : 'https://api.stlouisfed.org/fred/series/observations';
 
 /**
  * Check if a cached rate is stale based on its expiry hours.
@@ -43,72 +34,18 @@ export const isCacheStale = (timestamp, maxAgeHours) => {
 
 /**
  * Parse FRED CSV response and extract the most recent rate value.
- * FRED returns CSV in format: DATE,VALUE with newest data at top.
- * @param {string} csvText - Raw CSV text from FRED API
+ * Kept for test compatibility.
+ * @param {string} csvText - Raw CSV text
  * @returns {number|null} Most recent rate value or null if parsing fails
  */
 export const parseFredCsv = (csvText) => {
   try {
     const lines = csvText.trim().split('\n');
-
-    // First line is header: DATE,SERIES_ID
-    // Second line is most recent value
     if (lines.length < 2) return null;
-
-    const mostRecentLine = lines[1];
-    const parts = mostRecentLine.split(',');
-
+    const parts = lines[1].split(',');
     if (parts.length < 2) return null;
-
     const value = parseFloat(parts[1]);
-
-    // Check for missing/invalid data
     if (isNaN(value) || parts[1].trim() === '.') return null;
-
-    return value;
-  } catch {
-    return null;
-  }
-};
-
-/**
- * Fetch a single rate from FRED API.
- * @param {string} seriesId - FRED series ID
- * @returns {Promise<number|null>} Rate value or null if fetch fails
- */
-const fetchSingleRate = async (seriesId) => {
-  try {
-    const url = `${FRED_BASE_URL}?series_id=${seriesId}&api_key=${FRED_API_KEY}&sort_order=desc&limit=1&file_type=json`;
-    const response = await fetch(url);
-    if (!response.ok) {
-      console.warn(`FRED API returned ${response.status} for ${seriesId}`);
-      return null;
-    }
-    const data = await response.json();
-    return parseFredJson(data);
-  } catch (error) {
-    console.warn(`Failed to fetch ${seriesId}:`, error.message);
-    return null;
-  }
-};
-
-/**
- * Parse FRED JSON response and extract the most recent rate value.
- * @param {Object} data - JSON response from FRED API
- * @returns {number|null} Most recent rate value or null if parsing fails
- */
-/**
- * Parse FRED JSON response and extract the most recent rate value.
- * @param {Object} data - JSON response from FRED API
- * @returns {number|null} Most recent rate value or null if parsing fails
- */
-export const parseFredJson = (data) => {
-  try {
-    if (!data || !data.observations || data.observations.length === 0) {
-      return null;
-    }
-    const value = parseFloat(data.observations[0].value);
-    if (isNaN(value)) return null;
     return value;
   } catch {
     return null;
@@ -117,18 +54,15 @@ export const parseFredJson = (data) => {
 
 /**
  * Get cached rates from localStorage if they exist and are fresh.
- * Returns null if any rate is stale or cache is empty.
  * @returns {Object|null} Cached rates or null if stale/missing
  */
 export const getCachedRates = () => {
   const cached = getRates();
   if (!cached || !cached.rates || !cached.timestamps) return null;
 
-  // Check each rate individually against its own expiry
   for (const rateType of Object.keys(FRED_SERIES)) {
     const timestamp = cached.timestamps[rateType];
     const maxAge = CACHE_EXPIRY_HOURS[rateType];
-
     if (isCacheStale(timestamp, maxAge)) {
       return null;
     }
@@ -138,75 +72,48 @@ export const getCachedRates = () => {
 };
 
 /**
- * Fetch all four interest rates from FRED API.
- * Validates each rate before returning.
+ * Fetch all four interest rates from rates.json (baked in at build time).
+ * Falls back to cached rates if available.
  * @returns {Promise<Object>} Rate values keyed by rate type
  */
 export const fetchAllRates = async () => {
-  // Check cache first
   const cached = getCachedRates();
   if (cached) {
     return { success: true, rates: cached, fromCache: true };
   }
 
-  // Fetch all rates in parallel
-  const [mortgage, federal_funds, credit_card, auto_loan] = await Promise.all([
-    fetchSingleRate(FRED_SERIES.mortgage),
-    fetchSingleRate(FRED_SERIES.federal_funds),
-    fetchSingleRate(FRED_SERIES.credit_card),
-    fetchSingleRate(FRED_SERIES.auto_loan),
-  ]);
+  try {
+    const ratesUrl = import.meta.env.DEV
+      ? '/rates.json'
+      : '/budgetProj/rates.json';
 
-  // Check if any rate failed to fetch
-  const rates = { mortgage, federal_funds, credit_card, auto_loan };
-  const failedRates = Object.entries(rates)
-    .filter(([, value]) => value === null)
-    .map(([key]) => key);
+    const response = await fetch(ratesUrl);
+    if (!response.ok) throw new Error('Failed to load rates');
+    const data = await response.json();
 
-  if (failedRates.length > 0) {
-    return {
-      success: false,
-      error: `Failed to fetch rates: ${failedRates.join(', ')}`,
-      rates: null,
+    const rates = {
+      mortgage: data.mortgage,
+      federal_funds: data.federal_funds,
+      credit_card: data.credit_card,
+      auto_loan: data.auto_loan,
     };
+
+    const timestamps = {};
+    for (const rateType of Object.keys(rates)) {
+      timestamps[rateType] = Date.now();
+    }
+
+    saveRates(rates, timestamps);
+
+    return { success: true, rates, fromCache: false };
+  } catch (error) {
+    console.warn('Failed to load rates:', error.message);
+    return { success: false, error: error.message, rates: null };
   }
-
-  // Save to cache with individual timestamps
-  const timestamps = {};
-  for (const rateType of Object.keys(FRED_SERIES)) {
-    timestamps[rateType] = Date.now();
-  }
-
-  saveRates(rates, timestamps);
-
-  return { success: true, rates, fromCache: false };
-};
-
-/**
- * Fetch individual rate types
- */
-export const fetchMortgageRate = async () => {
-  return fetchSingleRate(FRED_SERIES.mortgage);
-};
-
-export const fetchFederalFundsRate = async () => {
-  return fetchSingleRate(FRED_SERIES.federal_funds);
-};
-
-export const fetchCreditCardRate = async () => {
-  return fetchSingleRate(FRED_SERIES.credit_card);
-};
-
-export const fetchAutoLoanRate = async () => {
-  return fetchSingleRate(FRED_SERIES.auto_loan);
 };
 
 export default {
   fetchAllRates,
-  fetchMortgageRate,
-  fetchFederalFundsRate,
-  fetchCreditCardRate,
-  fetchAutoLoanRate,
   getCachedRates,
   isCacheStale,
   parseFredCsv,

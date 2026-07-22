@@ -30,9 +30,10 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "fetch-rates": "node scripts/fetchRates.js",
+    "build": "npm run fetch-rates && vite build",
     "preview": "vite preview",
-    "lint": "eslint src/**/*.{js,jsx}",
+    "lint": "eslint src/**/*.{js,jsx} --ignore-pattern src/services/fetchRates.js --no-warn-ignored",
     "test": "vitest",
     "test:ui": "vitest --ui",
     "test:e2e": "playwright test",
