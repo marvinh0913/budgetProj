@@ -1,0 +1,38 @@
+/* ─── Budget Summary ─────────────────────────────────────────────────────────── */
+
+.budget-summary {
+    margin-bottom: var(--spacing-lg);
+  }
+  
+  .budget-summary-heading {
+    color: var(--color-primary);
+    margin-bottom: var(--spacing-lg);
+  }
+  
+  .budget-summary-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--spacing-lg);
+  }
+  
+  .budget-summary-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: var(--spacing-lg);
+    background-color: var(--color-background);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--color-border);
+    gap: var(--spacing-sm);
+  }
+  
+  .budget-summary-label {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-light);
+    text-align: center;
+  }
+  
+  .budget-summary-value {
+    font-size: var(--font-size-xl);
+    font-weight: bold;
+  }

@@ -1,0 +1,55 @@
+/* ─── Budget Card ────────────────────────────────────────────────────────────── */
+
+.budget-card {
+    margin-bottom: var(--spacing-lg);
+  }
+  
+  .budget-card-group {
+    text-transform: capitalize;
+    color: var(--color-primary);
+    margin-bottom: var(--spacing-md);
+  }
+  
+  .budget-card-stats {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-md);
+  }
+  
+  .budget-card-stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-xs);
+    flex: 1;
+  }
+  
+  .budget-card-label {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-light);
+  }
+  
+  .budget-card-value {
+    font-size: var(--font-size-xl);
+    font-weight: bold;
+  }
+  
+  .budget-card-percentage {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-light);
+  }
+  
+  .budget-card-divider {
+    width: 1px;
+    height: 60px;
+    background-color: var(--color-border);
+  }
+  
+  .budget-card-message {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-light);
+    margin-bottom: 0;
+    padding-top: var(--spacing-sm);
+    border-top: 1px solid var(--color-border);
+  }
