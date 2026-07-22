@@ -32,16 +32,21 @@ export default [
         Promise: 'readonly',
         setInterval: 'readonly',
         clearInterval: 'readonly',
+        setTimeout: 'readonly',    
+        clearTimeout: 'readonly',
+        performance: 'readonly',
       },
     },
     rules: {
       'react/react-in-jsx-scope': 'off',
-      'react/prop-types': 'warn',
+      'react/prop-types': 'off',
+      'react/jsx-uses-react': 'error',
+      'react/jsx-uses-vars': 'error',        
       'react-hooks/rules-of-hooks': 'error',
       'react-hooks/exhaustive-deps': 'warn',
       'no-unused-vars': 'warn',
       'no-console': ['warn', { allow: ['warn', 'error'] }],
-      'prettier/prettier': 'warn',          
+      'prettier/prettier': 'warn',      
     },
     settings: {
       react: {
