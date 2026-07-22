@@ -25,7 +25,9 @@ const CACHE_EXPIRY_HOURS = {
 };
 
 const FRED_API_KEY = import.meta.env.VITE_FRED_API_KEY;
-const FRED_BASE_URL = '/fred-api/series/observations';
+const FRED_BASE_URL = import.meta.env.DEV
+  ? '/fred-api/series/observations'
+  : 'https://api.stlouisfed.org/fred/series/observations';
 
 /**
  * Check if a cached rate is stale based on its expiry hours.
