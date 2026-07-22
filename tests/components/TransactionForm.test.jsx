@@ -21,7 +21,7 @@ const renderForm = () => {
 describe('TransactionForm accordion', () => {
   it('renders without crashing', () => {
     renderForm();
-    expect(screen.getByText(/add transaction/i)).toBeTruthy();
+    expect(screen.getByText(/add item/i)).toBeTruthy();
   });
 
   it('form inputs are hidden by default', () => {
@@ -31,14 +31,14 @@ describe('TransactionForm accordion', () => {
 
   it('form inputs show when accordion is opened', () => {
     renderForm();
-    fireEvent.click(screen.getByText(/add transaction/i));
+    fireEvent.click(screen.getByText(/add item/i));
     expect(screen.getByLabelText(/amount/i)).toBeTruthy();
   });
 
   it('form inputs hide when accordion is closed again', () => {
     renderForm();
-    fireEvent.click(screen.getByText(/add transaction/i));
-    fireEvent.click(screen.getByText(/add transaction/i));
+    fireEvent.click(screen.getByText(/add item/i));
+    fireEvent.click(screen.getByText(/add item/i));
     expect(screen.queryByLabelText(/amount/i)).toBeNull();
   });
 });
@@ -48,25 +48,25 @@ describe('TransactionForm accordion', () => {
 describe('TransactionForm inputs', () => {
   it('renders amount input', () => {
     renderForm();
-    fireEvent.click(screen.getByText(/add transaction/i));
+    fireEvent.click(screen.getByText(/add item/i));
     expect(screen.getByLabelText(/amount/i)).toBeTruthy();
   });
 
   it('renders category dropdown', () => {
     renderForm();
-    fireEvent.click(screen.getByText(/add transaction/i));
+    fireEvent.click(screen.getByText(/add item/i));
     expect(screen.getByLabelText(/category/i)).toBeTruthy();
   });
 
   it('renders type dropdown', () => {
     renderForm();
-    fireEvent.click(screen.getByText(/add transaction/i));
+    fireEvent.click(screen.getByText(/add item/i));
     expect(screen.getByLabelText(/type/i)).toBeTruthy();
   });
 
   it('amount input accepts numeric value', () => {
     renderForm();
-    fireEvent.click(screen.getByText(/add transaction/i));
+    fireEvent.click(screen.getByText(/add item/i));
     const input = screen.getByLabelText(/amount/i);
     fireEvent.change(input, { target: { value: '1500' } });
     expect(input.value).toBe('1500');
@@ -74,7 +74,7 @@ describe('TransactionForm inputs', () => {
 
   it('amount input accepts zero', () => {
     renderForm();
-    fireEvent.click(screen.getByText(/add transaction/i));
+    fireEvent.click(screen.getByText(/add item/i));
     const input = screen.getByLabelText(/amount/i);
     fireEvent.change(input, { target: { value: '0' } });
     expect(input.value).toBe('0');
@@ -82,7 +82,7 @@ describe('TransactionForm inputs', () => {
 
   it('category dropdown has correct options', () => {
     renderForm();
-    fireEvent.click(screen.getByText(/add transaction/i));
+    fireEvent.click(screen.getByText(/add item/i));
     expect(screen.getByRole('option', { name: /rent/i })).toBeTruthy();
     expect(screen.getByRole('option', { name: /groceries/i })).toBeTruthy();
     expect(screen.getByRole('option', { name: /other/i })).toBeTruthy();
@@ -90,18 +90,18 @@ describe('TransactionForm inputs', () => {
 
   it('type dropdown has income and expense options', () => {
     renderForm();
-    fireEvent.click(screen.getByText(/add transaction/i));
+    fireEvent.click(screen.getByText(/add item/i));
     expect(screen.getByRole('option', { name: /income/i })).toBeTruthy();
     expect(screen.getByRole('option', { name: /expense/i })).toBeTruthy();
   });
 });
 
-// ─── Add transaction ──────────────────────────────────────────────────────────
+// ─── Add item ──────────────────────────────────────────────────────────
 
 describe('TransactionForm adding', () => {
   it('calls onAdd when form is submitted with valid data', () => {
     renderForm();
-    fireEvent.click(screen.getByText(/add transaction/i));
+    fireEvent.click(screen.getByText(/add item/i));
 
     fireEvent.change(screen.getByLabelText(/amount/i), {
       target: { value: '1500' },
@@ -123,14 +123,14 @@ describe('TransactionForm adding', () => {
 
   it('does not call onAdd when amount is empty', () => {
     renderForm();
-    fireEvent.click(screen.getByText(/add transaction/i));
+    fireEvent.click(screen.getByText(/add item/i));
     fireEvent.click(screen.getByRole('button', { name: /^add$/i }));
     expect(mockOnAdd).not.toHaveBeenCalledWith();
   });
 
   it('resets form after successful add', () => {
     renderForm();
-    fireEvent.click(screen.getByText(/add transaction/i));
+    fireEvent.click(screen.getByText(/add item/i));
 
     fireEvent.change(screen.getByLabelText(/amount/i), {
       target: { value: '1500' },

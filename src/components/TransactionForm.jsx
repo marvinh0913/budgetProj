@@ -1,5 +1,9 @@
 import { useState } from 'react';
-import { ChevronDownIcon, ChevronUpIcon, PlusIcon } from '@heroicons/react/24/outline';
+import {
+  ChevronDownIcon,
+  ChevronUpIcon,
+  PlusIcon,
+} from '@heroicons/react/24/outline';
 import '../styles/transactionform.css';
 
 const CATEGORIES = [
@@ -22,6 +26,7 @@ const CATEGORIES = [
   'investments',
   'emergency_fund',
   'retirement',
+  'paycheck',
   'other',
 ];
 
@@ -53,7 +58,7 @@ function TransactionForm({ onAdd }) {
   return (
     <div className="transaction-form card">
       <button className="transaction-form-toggle btn" onClick={handleToggle}>
-        <span>Add Transaction</span>
+        <span>Add Item</span>
         {isOpen ? (
           <ChevronUpIcon className="form-icon" />
         ) : (

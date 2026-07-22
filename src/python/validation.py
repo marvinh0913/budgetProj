@@ -24,6 +24,7 @@ VALID_CATEGORIES = [
     "investments",
     "emergency_fund",
     "retirement",
+    "paycheck",
     "other",
 ]
 
