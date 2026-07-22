@@ -53,3 +53,11 @@
     width: 20px;
     height: 20px;
   }
+
+  .navbar-logo {
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
+    vertical-align: middle;
+    margin-left: var(--spacing-sm);
+  }
