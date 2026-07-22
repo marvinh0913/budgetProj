@@ -31,15 +31,15 @@ function InterestImpact({ data }) {
     );
   }
 
-  const { final_balance, total_deposited, interest_earned, monthly_rate } = data;
+  const { final_balance, total_deposited, interest_earned, monthly_rate } =
+    data;
 
   // Generate monthly growth data points
   const months = Array.from({ length: 13 }, (_, i) => `Month ${i}`);
   const balances = months.map((_, i) => {
-    if (i === 0) return total_deposited - (total_deposited - (total_deposited / 12));
-    return Math.round(
-      (total_deposited / 12) * i * (1 + monthly_rate / 100)
-    );
+    if (i === 0)
+      return total_deposited - (total_deposited - total_deposited / 12);
+    return Math.round((total_deposited / 12) * i * (1 + monthly_rate / 100));
   });
 
   const chartData = {

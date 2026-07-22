@@ -4,7 +4,7 @@ import '../styles/debtcalculator.css';
 const TABS = ['mortgage', 'credit card', 'auto loan', 'savings'];
 const AUTO_LOAN_TERMS = [24, 36, 48, 60, 72, 84];
 
-function DebtCalculator({ rates, transactions, onCalculate }) {
+function DebtCalculator({ rates, onCalculate }) {
   const [activeTab, setActiveTab] = useState('mortgage');
 
   // Mortgage state

@@ -52,15 +52,11 @@ function TransactionList({ transactions, onDelete, onUndo }) {
         {transactions.map((t) => (
           <li key={t.id} role="listitem" className="transaction-list-item">
             <div className="transaction-list-info">
-              <span className={`transaction-type ${t.type}`}>
-                {t.type}
-              </span>
+              <span className={`transaction-type ${t.type}`}>{t.type}</span>
               <span className="transaction-category">
                 {t.category.replace(/_/g, ' ')}
               </span>
-              <span className="transaction-amount">
-                ${t.amount.toFixed(2)}
-              </span>
+              <span className="transaction-amount">${t.amount.toFixed(2)}</span>
             </div>
             <button
               className="btn btn-danger"

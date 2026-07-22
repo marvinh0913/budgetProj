@@ -21,7 +21,7 @@ const FAQ_ITEMS = [
   {
     question: 'Is my data saved anywhere?',
     answer:
-      'Your data is stored only in your browser\'s localStorage — it never leaves your device or gets sent to any server. This means your budget data is private by design. However, clearing your browser data will erase it, so consider exporting your data if you want to keep a record.',
+      "Your data is stored only in your browser's localStorage — it never leaves your device or gets sent to any server. This means your budget data is private by design. However, clearing your browser data will erase it, so consider exporting your data if you want to keep a record.",
   },
   {
     question: 'How are calculations done?',
@@ -31,7 +31,7 @@ const FAQ_ITEMS = [
   {
     question: 'What does cache mean?',
     answer:
-      'When BudgetProj fetches interest rates from FRED, it saves them temporarily in your browser\'s localStorage — this is called caching. On your next visit, the app checks if the cached rates are still fresh before making another network request. Mortgage rates cache for 24 hours, federal funds rates for 7 days, credit card rates for 30 days, and auto loan rates for 7 days.',
+      "When BudgetProj fetches interest rates from FRED, it saves them temporarily in your browser's localStorage — this is called caching. On your next visit, the app checks if the cached rates are still fresh before making another network request. Mortgage rates cache for 24 hours, federal funds rates for 7 days, credit card rates for 30 days, and auto loan rates for 7 days.",
   },
 ];
 

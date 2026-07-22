@@ -19,9 +19,7 @@ function SuggestionList({ suggestions }) {
         {suggestions.map((suggestion) => (
           <li key={suggestion.group} className="suggestion-item">
             <div className="suggestion-item-header">
-              <span className="suggestion-item-group">
-                {suggestion.group}
-              </span>
+              <span className="suggestion-item-group">{suggestion.group}</span>
               <span className="suggestion-item-difference text-danger">
                 ${suggestion.difference.toFixed(2)} over
               </span>

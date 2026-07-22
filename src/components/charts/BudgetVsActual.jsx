@@ -10,7 +10,14 @@ import {
 } from 'chart.js';
 import '../../styles/charts.css';
 
-ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend
+);
 
 const BUDGET_TARGETS = {
   essentials: 50,
