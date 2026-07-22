@@ -23,7 +23,7 @@ describe('WelcomeMessage rendering', () => {
 
   it('displays how to use instructions', () => {
     render(<WelcomeMessage />);
-    expect(screen.getByText(/add your current monthly expenses/i)).toBeTruthy();
+    expect(screen.getByText(/based your current monthly income and expenses/i)).toBeTruthy();
   });
 
   it('displays calculate instruction', () => {

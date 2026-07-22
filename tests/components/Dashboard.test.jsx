@@ -97,7 +97,7 @@ describe('Dashboard rendering', () => {
 
   it('renders transaction form', () => {
     renderDashboard();
-    expect(screen.getByText(/add transaction/i)).toBeTruthy();
+    expect(screen.getByText(/add item/i)).toBeTruthy();
   });
 
   it('renders empty transaction list', () => {
@@ -121,7 +121,7 @@ describe('Dashboard rendering', () => {
 describe('Dashboard transaction management', () => {
   it('adds a transaction when form is submitted', () => {
     renderDashboard();
-    fireEvent.click(screen.getByText(/add transaction/i));
+    fireEvent.click(screen.getByText(/add item/i));
     fireEvent.change(screen.getByLabelText(/amount/i), {
       target: { value: '1500' },
     });
@@ -131,7 +131,7 @@ describe('Dashboard transaction management', () => {
 
   it('shows calculate button when transactions exist', () => {
     renderDashboard();
-    fireEvent.click(screen.getByText(/add transaction/i));
+    fireEvent.click(screen.getByText(/add item/i));
     fireEvent.change(screen.getByLabelText(/amount/i), {
       target: { value: '1500' },
     });
@@ -141,7 +141,7 @@ describe('Dashboard transaction management', () => {
 
   it('removes transaction when delete is clicked', () => {
     renderDashboard();
-    fireEvent.click(screen.getByText(/add transaction/i));
+    fireEvent.click(screen.getByText(/add item/i));
     fireEvent.change(screen.getByLabelText(/amount/i), {
       target: { value: '1500' },
     });
@@ -156,7 +156,7 @@ describe('Dashboard transaction management', () => {
 describe('Dashboard calculate flow', () => {
   it('shows budget summary after calculate', async () => {
     renderDashboard();
-    fireEvent.click(screen.getByText(/add transaction/i));
+    fireEvent.click(screen.getByText(/add item/i));
     fireEvent.change(screen.getByLabelText(/amount/i), {
       target: { value: '3000' },
     });
@@ -172,7 +172,7 @@ describe('Dashboard calculate flow', () => {
 
   it('shows debt calculator after calculate', async () => {
     renderDashboard();
-    fireEvent.click(screen.getByText(/add transaction/i));
+    fireEvent.click(screen.getByText(/add item/i));
     fireEvent.change(screen.getByLabelText(/amount/i), {
       target: { value: '3000' },
     });

@@ -175,7 +175,9 @@ describe('fetchAllRates', () => {
     saveRates(SAMPLE_RATES, STALE_TIMESTAMPS);
     vi.spyOn(global, 'fetch').mockResolvedValue({
       ok: true,
-      text: async () => SAMPLE_CSV,
+      json: async () => ({
+        observations: [{ value: '6.59' }],
+      }),
     });
     const result = await fetchAllRates();
     expect(result.success).toBe(true);
@@ -198,7 +200,9 @@ describe('fetchAllRates', () => {
     clearRates();
     vi.spyOn(global, 'fetch').mockResolvedValue({
       ok: true,
-      text: async () => SAMPLE_CSV,
+      json: async () => ({
+        observations: [{ value: '6.59' }],
+      }),
     });
     await fetchAllRates();
     const cached = getCachedRates();
@@ -209,7 +213,9 @@ describe('fetchAllRates', () => {
     clearRates();
     vi.spyOn(global, 'fetch').mockResolvedValue({
       ok: true,
-      text: async () => SAMPLE_CSV,
+      json: async () => ({
+        observations: [{ value: '6.59' }],
+      }),
     });
     const result = await fetchAllRates();
     expect(result.fromCache).toBe(false);

@@ -59,7 +59,9 @@ describe('fetch rates and cache', () => {
   it('fetches rates and saves to localStorage', async () => {
     vi.spyOn(global, 'fetch').mockResolvedValue({
       ok: true,
-      text: async () => MOCK_CSV,
+      json: async () => ({
+        observations: [{ value: '6.59' }],
+      }),
     });
 
     await fetchAllRates();
@@ -71,7 +73,9 @@ describe('fetch rates and cache', () => {
   it('saves timestamps alongside rates', async () => {
     vi.spyOn(global, 'fetch').mockResolvedValue({
       ok: true,
-      text: async () => MOCK_CSV,
+      json: async () => ({
+        observations: [{ value: '6.59' }],
+      }),
     });
 
     await fetchAllRates();
@@ -83,7 +87,9 @@ describe('fetch rates and cache', () => {
   it('returns success after fetching', async () => {
     vi.spyOn(global, 'fetch').mockResolvedValue({
       ok: true,
-      text: async () => MOCK_CSV,
+      json: async () => ({
+        observations: [{ value: '6.59' }],
+      }),
     });
 
     const result = await fetchAllRates();
@@ -93,7 +99,9 @@ describe('fetch rates and cache', () => {
   it('returns fromCache false on first fetch', async () => {
     vi.spyOn(global, 'fetch').mockResolvedValue({
       ok: true,
-      text: async () => MOCK_CSV,
+      json: async () => ({
+        observations: [{ value: '6.59' }],
+      }),
     });
 
     const result = await fetchAllRates();
@@ -141,7 +149,9 @@ describe('retrieve from cache on subsequent loads', () => {
     saveRates(SAMPLE_RATES, STALE_TIMESTAMPS);
     const fetchSpy = vi.spyOn(global, 'fetch').mockResolvedValue({
       ok: true,
-      text: async () => MOCK_CSV,
+      json: async () => ({
+        observations: [{ value: '6.59' }],
+      }),
     });
 
     await fetchAllRates();
@@ -152,7 +162,9 @@ describe('retrieve from cache on subsequent loads', () => {
     saveRates(SAMPLE_RATES, STALE_TIMESTAMPS);
     vi.spyOn(global, 'fetch').mockResolvedValue({
       ok: true,
-      text: async () => MOCK_CSV,
+      json: async () => ({
+        observations: [{ value: '6.59' }],
+      }),
     });
 
     await fetchAllRates();
@@ -182,7 +194,9 @@ describe('parse and validate FRED response', () => {
   it('cached rates match parsed values after fetch', async () => {
     vi.spyOn(global, 'fetch').mockResolvedValue({
       ok: true,
-      text: async () => MOCK_CSV,
+      json: async () => ({
+        observations: [{ value: '6.59' }],
+      }),
     });
 
     await fetchAllRates();
@@ -201,7 +215,9 @@ describe('multi step real world FRED scenarios', () => {
     // Step 2 — fetch from FRED
     vi.spyOn(global, 'fetch').mockResolvedValue({
       ok: true,
-      text: async () => MOCK_CSV,
+      json: async () => ({
+        observations: [{ value: '6.59' }],
+      }),
     });
     const firstLoad = await fetchAllRates();
     expect(firstLoad.fromCache).toBe(false);
@@ -222,7 +238,9 @@ describe('multi step real world FRED scenarios', () => {
     // Step 2 — fetch triggers because cache is stale
     vi.spyOn(global, 'fetch').mockResolvedValue({
       ok: true,
-      text: async () => MOCK_CSV,
+      json: async () => ({
+        observations: [{ value: '6.59' }],
+      }),
     });
     const result = await fetchAllRates();
     expect(result.fromCache).toBe(false);
