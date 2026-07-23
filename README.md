@@ -3,7 +3,7 @@
 A client-side budgeting application built with React and Python (via Pyodide). Enter your monthly income and expenses to get a personalized budget breakdown, spending analysis, and financial suggestions based on the 50/30/20 rule. All calculations run directly in your browser.
 
 ## Live Demo
-[URL ]
+[https://marvinh0913.github.io/budgetProj/]
 
 ## Features
 - **Budget Analysis** — Track income and expenses by category with real-time calculations
