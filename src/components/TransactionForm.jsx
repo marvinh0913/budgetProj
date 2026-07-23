@@ -43,8 +43,12 @@ function TransactionForm({ onAdd }) {
   const handleAdd = () => {
     if (amount === '') return;
 
+    const parsedAmount = parseFloat(amount);
+
+    if (isNaN(parsedAmount) || parsedAmount < 0) return;
+
     onAdd({
-      amount: parseFloat(amount),
+      amount: parsedAmount,
       category,
       type,
     });
@@ -80,7 +84,11 @@ function TransactionForm({ onAdd }) {
               onChange={(e) => setAmount(e.target.value)}
               placeholder="0.00"
               min="0"
+              step="0.01"
             />
+            {amount !== '' && parseFloat(amount) < 0 && (
+              <span className="form-error">Amount cannot be negative</span>
+            )}
           </div>
 
           <div className="form-group">
