@@ -77,7 +77,7 @@ export const initializePyodide = async () => {
     // Load Pyodide runtime
     const { loadPyodide } = await import('pyodide');
     pyodideInstance = await loadPyodide({
-      indexURL: 'https://cdn.jsdelivr.net/pyodide/v0.27.0/full/',
+      indexURL: 'https://cdn.jsdelivr.net/pyodide/v314.0.2/full/',
     });
 
     // Load Python calculation files
