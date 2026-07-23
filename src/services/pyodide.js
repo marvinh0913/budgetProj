@@ -20,10 +20,11 @@ export const isReady = () => pyodideInstance !== null;
  * @param {Object} pyodide - Initialized Pyodide instance
  */
 const loadPythonFiles = async (pyodide) => {
+  const base = import.meta.env.DEV ? '' : '/budgetProj';
   const files = [
-    '/src/python/validation.py',
-    '/src/python/calculations.py',
-    '/src/python/interest.py',
+    `${base}/src/python/validation.py`,
+    `${base}/src/python/calculations.py`,
+    `${base}/src/python/interest.py`,
   ];
 
   for (const file of files) {
