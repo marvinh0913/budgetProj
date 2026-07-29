@@ -218,7 +218,8 @@ def generate_budget_suggestions(transactions):
                     "recommended_amount": recommended_amount,
                     "difference": difference,
                     "message": (
-                        f"Your {group} spending is {actual_pct}% of income "
+                        f" Your {group} spending is {actual_pct}% "
+                        f"of your monthly budget "
                         f"(${actual_amount:.2f}). Consider reducing by "
                         f"${difference:.2f} to reach the recommended "
                         f"{target_pct}% (${recommended_amount:.2f})."
