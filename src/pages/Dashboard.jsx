@@ -164,7 +164,7 @@ function Dashboard() {
                         summary.total_income > 0
                           ? Math.round((amount / summary.total_income) * 100)
                           : 0
-                      }% of income.`,
+                      }% of your monthly budget.`,
                     }}
                   />
                 ))}
