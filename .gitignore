@@ -12,3 +12,4 @@ playwright-report/
 test-results/
 .pyodide-cache/
 frontend/public/src/
+.venv/
