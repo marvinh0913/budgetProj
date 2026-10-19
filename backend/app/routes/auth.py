@@ -7,6 +7,8 @@ from app.db import get_db
 from app.models.auth import LoginRequest, RegisterRequest, TokenResponse
 from app.security import create_access_token, hash_password, verify_password
 
+from app.dependencies import get_current_user_id
+
 router = APIRouter(prefix="/auth", tags=["auth"])
 
 # Used when the email doesn't exist, so failed logins take the same time
@@ -47,3 +49,14 @@ def login(body: LoginRequest, conn=Depends(get_db)):
             detail="Invalid email or password",
         )
     return TokenResponse(access_token=create_access_token(user["id"]))
+
+@router.get("/me")
+def me(user_id: int = Depends(get_current_user_id), conn=Depends(get_db)):
+    user = conn.execute(
+        "SELECT id, email, created_at FROM users WHERE id = %s",
+        (user_id,),
+    ).fetchone()
+    if user is None:
+        # Token is valid but the account was deleted
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User not found")
+    return user
