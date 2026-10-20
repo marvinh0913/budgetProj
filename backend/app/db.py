@@ -10,9 +10,10 @@ from app.config import get_settings
 pool = ConnectionPool(
     conninfo=get_settings().database_url,
     min_size=1,
-    max_size=5,
-    kwargs={"row_factory": dict_row},  # rows come back as dicts, not tuples
-    open=False,  # opened when the app starts (see main.py)
+    max_size=2,  # each Lambda instance handles one request at a time
+    kwargs={"row_factory": dict_row},
+    check=ConnectionPool.check_connection,  # discard connections that went stale
+    open=False,
 )
 
 

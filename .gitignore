@@ -13,3 +13,5 @@ test-results/
 .pyodide-cache/
 frontend/public/src/
 .venv/
+backend/build/
+backend/lambda.zip
