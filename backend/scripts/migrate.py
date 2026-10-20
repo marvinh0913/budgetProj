@@ -18,19 +18,15 @@ def main():
     files = sorted(MIGRATIONS_DIR.glob("*.sql"))
 
     with psycopg.connect(get_settings().database_url, autocommit=True) as conn:
-        conn.execute(
-            """
+        conn.execute("""
             CREATE TABLE IF NOT EXISTS schema_migrations (
                 filename   TEXT PRIMARY KEY,
                 applied_at TIMESTAMPTZ NOT NULL DEFAULT now()
             )
-            """
-        )
+            """)
 
         applied = {
-            row[0] for row in conn.execute(
-                "SELECT filename FROM schema_migrations"
-                )
+            row[0] for row in conn.execute("SELECT filename FROM schema_migrations")
         }
 
         for path in files:

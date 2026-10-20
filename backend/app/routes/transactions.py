@@ -70,5 +70,7 @@ def delete_transaction(
         (transaction_id, user_id),
     ).fetchone()
     if deleted is None:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Transaction not found")
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="Transaction not found"
+        )
     return Response(status_code=status.HTTP_204_NO_CONTENT)

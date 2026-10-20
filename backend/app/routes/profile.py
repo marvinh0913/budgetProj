@@ -20,7 +20,9 @@ def get_profile(user_id: int = Depends(get_current_user_id), conn=Depends(get_db
         (user_id,),
     ).fetchone()
     if profile is None:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="No profile yet")
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="No profile yet"
+        )
     return profile
 
 

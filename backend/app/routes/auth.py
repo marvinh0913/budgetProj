@@ -50,6 +50,7 @@ def login(body: LoginRequest, conn=Depends(get_db)):
         )
     return TokenResponse(access_token=create_access_token(user["id"]))
 
+
 @router.get("/me")
 def me(user_id: int = Depends(get_current_user_id), conn=Depends(get_db)):
     user = conn.execute(
@@ -58,5 +59,7 @@ def me(user_id: int = Depends(get_current_user_id), conn=Depends(get_db)):
     ).fetchone()
     if user is None:
         # Token is valid but the account was deleted
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User not found")
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="User not found"
+        )
     return user
