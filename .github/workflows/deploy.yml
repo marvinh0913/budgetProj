@@ -30,6 +30,7 @@ jobs:
         run: npm run build
         env:
           VITE_FRED_API_KEY: ${{ secrets.VITE_FRED_API_KEY }}
+          VITE_API_URL: ${{ vars.API_URL }}
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v4

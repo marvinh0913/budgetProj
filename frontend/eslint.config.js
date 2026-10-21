@@ -27,6 +27,7 @@ export default [
         document: 'readonly',
         console: 'readonly',
         localStorage: 'readonly',
+        URLSearchParams: 'readonly',
         fetch: 'readonly',
         Date: 'readonly',
         Promise: 'readonly',
