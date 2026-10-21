@@ -54,26 +54,65 @@ jobs:
       DATABASE_URL: postgresql://budgetproj:budgetproj@localhost:5432/budgetproj_test
       JWT_SECRET: ci-only-not-a-real-secret
       FRED_API_KEY: not-used-in-ci
-      
+
     steps:
-        - uses: actions/checkout@v4
-  
-        - uses: actions/setup-python@v5
-          with:
-            python-version: "3.11"
-            cache: pip
-            cache-dependency-path: |
-              backend/requirements.txt
-              backend/requirements-dev.txt
-        - run: pip install -r requirements-dev.txt
-  
-        - name: Check formatting
-          run: black --check app scripts tests
-        - name: Lint
-          run: flake8 app scripts tests
-  
-        - name: Apply migrations
-          run: python -m scripts.migrate
-  
-        - name: Run tests
-          run: python -m pytest
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+          cache-dependency-path: |
+            backend/requirements.txt
+            backend/requirements-dev.txt
+      - run: pip install -r requirements-dev.txt
+
+      - name: Check formatting
+        run: black --check app scripts tests
+      - name: Lint
+        run: flake8 app scripts tests
+
+      - name: Apply migrations
+        run: python -m scripts.migrate
+
+      - name: Run tests
+        run: python -m pytest
+
+  deploy-backend:
+    needs: backend
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    concurrency: deploy-backend
+    permissions:
+      id-token: write
+      contents: read
+    defaults:
+      run:
+        working-directory: backend
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Build Lambda package
+        run: ./scripts/build_lambda.sh
+
+      - name: Get AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ vars.AWS_DEPLOY_ROLE_ARN }}
+          aws-region: us-east-1
+
+      - name: Deploy to both functions
+        run: |
+          for fn in budgetproj-api budgetproj-refresh-rates; do
+            aws lambda update-function-code --function-name "$fn" --zip-file fileb://lambda.zip > /dev/null
+            aws lambda wait function-updated-v2 --function-name "$fn"
+            echo "Deployed $fn"
+          done
+
+      - name: Smoke test
+        run: curl --fail --silent --show-error "${{ vars.API_URL }}/health/db"
