@@ -1,8 +1,12 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { QuestionMarkCircleIcon } from '@heroicons/react/24/outline';
 import { isLoggedIn, logout } from '../services/api';
 import '../styles/navbar.css';
+import {
+  CalculatorIcon,
+  QuestionMarkCircleIcon,
+} from '@heroicons/react/24/outline';
+
 
 function NavBar() {
   const navigate = useNavigate();
@@ -23,6 +27,10 @@ function NavBar() {
           <img src={logoUrl} alt="BudgetProj logo" className="navbar-logo" />
         </Link>
         <div className="navbar-links">
+          <Link to="/affordability" className="navbar-faq-link">
+            <CalculatorIcon className="navbar-icon" />
+            Affordability
+          </Link>
           <Link to="/faq" className="navbar-faq-link">
             <QuestionMarkCircleIcon className="navbar-icon" />
             FAQ
@@ -36,9 +44,9 @@ function NavBar() {
               Log out
             </button>
           ) : (
-            <Link to="/login" className="navbar-faq-link">
-              Log in
-            </Link>
+          <Link to="/login" className="navbar-faq-link">
+            Log in
+          </Link>
           )}
         </div>
       </div>
