@@ -1,9 +1,19 @@
-import { Link } from 'react-router-dom';
+import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { QuestionMarkCircleIcon } from '@heroicons/react/24/outline';
+import { isLoggedIn, logout } from '../services/api';
 import '../styles/navbar.css';
 
 function NavBar() {
+  const navigate = useNavigate();
+  const [loggedIn, setLoggedIn] = useState(isLoggedIn());
   const logoUrl = import.meta.env.DEV ? '/logo.png' : '/budgetProj/logo.png';
+
+  const handleLogout = () => {
+    logout();
+    setLoggedIn(false);
+    navigate('/');
+  };
 
   return (
     <nav className="navbar" role="navigation">
@@ -17,6 +27,19 @@ function NavBar() {
             <QuestionMarkCircleIcon className="navbar-icon" />
             FAQ
           </Link>
+          {loggedIn ? (
+            <button
+              type="button"
+              className="navbar-faq-link navbar-button"
+              onClick={handleLogout}
+            >
+              Log out
+            </button>
+          ) : (
+            <Link to="/login" className="navbar-faq-link">
+              Log in
+            </Link>
+          )}
         </div>
       </div>
     </nav>

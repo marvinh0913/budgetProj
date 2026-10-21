@@ -1,0 +1,53 @@
+/* ─── Auth (login / register) ─────────────────────────────────────────────── */
+
+.auth-card {
+    max-width: 420px;
+    margin: 0 auto;
+  }
+  
+  .auth-heading {
+    text-align: center;
+  }
+  
+  .auth-form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+  }
+  
+  .auth-hint {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-light);
+  }
+  
+  .auth-error {
+    color: var(--color-danger);
+    font-size: var(--font-size-sm);
+    margin: 0;
+  }
+  
+  .auth-submit {
+    justify-content: center;
+    width: 100%;
+  }
+  
+  .auth-submit:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+  
+  .auth-switch {
+    text-align: center;
+    margin-top: var(--spacing-lg);
+    margin-bottom: 0;
+  }
+  
+  .auth-link {
+    background: none;
+    border: none;
+    padding: 0;
+    color: var(--color-primary);
+    font: inherit;
+    cursor: pointer;
+    text-decoration: underline;
+  }
