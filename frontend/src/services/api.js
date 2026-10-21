@@ -129,3 +129,11 @@ export const createTransaction = (transaction) =>
 
 export const deleteTransaction = (id) =>
   request(`/transactions/${id}`, { method: 'DELETE', auth: true });
+
+/**
+ * Public estimate, no login needed. inputs: { gross_monthly_income,
+ * monthly_debt_payments, down_payment_savings, mortgage_term_years?,
+ * auto_term_months?, auto_down_payment? }
+ */
+export const estimateAffordability = (inputs) =>
+  request('/affordability/estimate', { method: 'POST', body: inputs });
