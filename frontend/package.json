@@ -31,9 +31,9 @@
   "scripts": {
     "dev": "vite",
     "fetch-rates": "node src/services/fetchRates.js",
-    "build": "npm run fetch-rates && mkdir -p public/src/python && cp src/python/*.py public/src/python/ && vite build && cp dist/index.html dist/404.html",
+    "build": "mkdir -p public/src/python && cp src/python/*.py public/src/python/ && vite build && cp dist/index.html dist/404.html",
     "preview": "vite preview",
-    "lint": "eslint src/**/*.{js,jsx} --ignore-pattern src/services/fetchRates.js --no-warn-ignored",
+    "lint": "eslint src/**/*.{js,jsx} --no-warn-ignored",
     "test": "vitest",
     "test:ui": "vitest --ui",
     "test:e2e": "playwright test",
