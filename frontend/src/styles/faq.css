@@ -36,3 +36,7 @@
     display: inline-flex;
     margin-bottom: var(--spacing-xl);
   }
+
+  .faq-answer + .faq-answer {
+    margin-top: var(--spacing-sm);
+  }

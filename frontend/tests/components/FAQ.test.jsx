@@ -54,9 +54,25 @@ describe('FAQ rendering', () => {
     expect(screen.getByText(/how are calculations done/i)).toBeTruthy();
   });
 
-  it('renders cache section', () => {
+  it('renders server unavailable section', () => {
     renderFAQ();
-    expect(screen.getByText(/what does cache mean/i)).toBeTruthy();
+    expect(
+      screen.getByRole('heading', { name: /what happens if the server is unavailable/i })
+    ).toBeTruthy();
+  });
+
+  it('renders account section', () => {
+    renderFAQ();
+    expect(
+      screen.getByRole('heading', { name: /do i need an account/i })
+    ).toBeTruthy();
+  });
+
+  it('renders affordability section', () => {
+    renderFAQ();
+    expect(
+      screen.getByRole('heading', { name: /how is affordability calculated/i })
+    ).toBeTruthy();
   });
 
   it('renders back to home link', () => {
