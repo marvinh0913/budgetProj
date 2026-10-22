@@ -11,19 +11,19 @@
     padding: var(--spacing-xl);
   }
   
-  /* ─── Spending Breakdown ─────────────────────────────────────────────────────── */
+/* ─── Spending Breakdown ─────────────────────────────────────────────────────── */
   
   .spending-breakdown {
     margin-bottom: var(--spacing-lg);
   }
   
-  /* ─── Budget vs Actual ───────────────────────────────────────────────────────── */
+/* ─── Budget vs Actual ───────────────────────────────────────────────────────── */
   
   .budget-vs-actual {
     margin-bottom: var(--spacing-lg);
   }
   
-  /* ─── Interest Impact ────────────────────────────────────────────────────────── */
+/* ─── Interest Impact ────────────────────────────────────────────────────────── */
   
   .interest-impact {
     margin-bottom: var(--spacing-lg);
@@ -50,3 +50,86 @@
     font-size: var(--font-size-xl);
     font-weight: bold;
   }
+ 
+/* ─── Budget Impact ──────────────────────────────────────────────────────────── */
+
+.budget-impact {
+  margin-top: var(--spacing-lg);
+}
+
+.budget-impact-intro {
+  font-size: var(--font-size-sm);
+}
+
+.budget-impact-switcher {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-md);
+}
+
+.budget-impact-tab {
+  padding: var(--spacing-xs) var(--spacing-md);
+  border: 1px solid var(--color-primary);
+  border-radius: var(--radius-xl);
+  background-color: var(--color-white);
+  color: var(--color-primary);
+  font: inherit;
+  font-size: var(--font-size-sm);
+  cursor: pointer;
+  transition: background-color var(--transition-fast);
+}
+
+.budget-impact-tab:hover {
+  background-color: var(--color-background);
+}
+
+.budget-impact-tab.is-active {
+  background-color: var(--color-primary);
+  color: var(--color-white);
+}
+
+.budget-impact-summary {
+  font-size: var(--font-size-lg);
+  color: var(--color-text-dark);
+}
+
+.budget-impact-chart {
+  position: relative;
+  height: 300px;
+  margin-bottom: var(--spacing-lg);
+}
+
+.budget-impact-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--font-size-sm);
+}
+
+.budget-impact-table th,
+.budget-impact-table td {
+  padding: var(--spacing-sm);
+  border-bottom: 1px solid var(--color-border);
+  text-align: right;
+}
+
+.budget-impact-table th:first-child {
+  text-align: left;
+}
+
+.budget-impact-table tr.is-selected {
+  background-color: var(--color-background);
+}
+
+.budget-impact-short {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  color: var(--color-danger);
+  font-weight: bold;
+}
+
+.budget-impact-icon {
+  width: 16px;
+  height: 16px;
+}

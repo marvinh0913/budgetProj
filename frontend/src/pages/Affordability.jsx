@@ -1,4 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
+import { Link } from 'react-router-dom';
+import BudgetImpact from '../components/charts/BudgetImpact';
+import { getTransactions } from '../services/storage';
+import { buildScenarios, summarizeBudget } from '../utils/budgetScenarios';
 import NavBar from '../components/NavBar';
 import AffordabilityResults from '../components/AffordabilityResults';
 import {
@@ -42,6 +46,8 @@ function Affordability() {
   const [results, setResults] = useState(null);
   const [error, setError] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  // The dashboard's saved budget, read once when the page opens
+  const budget = useMemo(() => summarizeBudget(getTransactions()), []);
 
   // Logged-in users: fill the form from their saved profile
   useEffect(() => {
@@ -215,7 +221,23 @@ function Affordability() {
           </button>
         </form>
 
-        {results && <AffordabilityResults results={results} />}
+        {results && (
+          <>
+            <AffordabilityResults results={results} />
+            {budget.income > 0 ? (
+              <BudgetImpact
+                scenarios={buildScenarios(budget, results)}
+                income={budget.income}
+              />
+            ) : (
+              <p className="card affordability-note">
+                Add your income and expenses on the{' '}
+                <Link to="/">home page</Link> to see how these payments would
+                fit your monthly budget.
+              </p>
+            )}
+          </>
+        )}
       </div>
     </div>
   );
