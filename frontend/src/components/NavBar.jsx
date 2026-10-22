@@ -7,7 +7,6 @@ import {
   QuestionMarkCircleIcon,
 } from '@heroicons/react/24/outline';
 
-
 function NavBar() {
   const navigate = useNavigate();
   const [loggedIn, setLoggedIn] = useState(isLoggedIn());
@@ -44,9 +43,9 @@ function NavBar() {
               Log out
             </button>
           ) : (
-          <Link to="/login" className="navbar-faq-link">
-            Log in
-          </Link>
+            <Link to="/login" className="navbar-faq-link">
+              Log in
+            </Link>
           )}
         </div>
       </div>
